@@ -6,15 +6,14 @@ import kyServer from "@/lib/ky";
 import { AnimeType } from "@/lib/types";
 import Loading from "@/components/Loader";
 
-// Update the PageProps interface to match Next.js 13+ typing
-interface PageProps {
+type PageProps = {
   params: {
     category: string;
   };
-  searchParams?: {
-    page?: string;
+  searchParams: {
+    page?: string | string[];
   };
-}
+};
 
 async function FetchAnimeData({
   category,
@@ -46,9 +45,17 @@ async function FetchAnimeData({
   );
 }
 
-export default function CategoryPage({ params, searchParams }: PageProps) {
+export default async function CategoryPage({
+  params,
+  searchParams,
+}: PageProps) {
   const { category } = params;
-  const currentPage = Number(searchParams?.page) || 1;
+  const currentPage =
+    Number(
+      Array.isArray(searchParams.page)
+        ? searchParams.page[0]
+        : searchParams.page,
+    ) || 1;
 
   return (
     <div className="space-y-5 sm:p-6">
