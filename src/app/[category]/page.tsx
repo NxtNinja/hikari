@@ -41,7 +41,8 @@ type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
-export default async function CategoryPage({ params, searchParams }: Props) {
+// ❌ Do not use `async` on this function!
+export default function CategoryPage({ params, searchParams }: Props) {
   const { category } = params;
   const page = searchParams.page;
   const currentPage = Number(Array.isArray(page) ? page[0] : page) || 1;
