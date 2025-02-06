@@ -1,7 +1,13 @@
-const Home = () => {
+import getAllAnime from "@/hooks/anime/getAllAnime";
+
+const Home = async () => {
+  const { data, isError, error } = await getAllAnime();
+
+  console.log(data?.data, isError, error);
+
   return (
     <>
-      <div className="grid h-screen place-items-center">Home</div>
+      <div className="w-full">{/* <DisplayAnimeCards /> */}</div>
     </>
   );
 };
