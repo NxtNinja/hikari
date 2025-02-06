@@ -59,7 +59,9 @@ export function PaginationComponent({
           <PaginationPrevious
             onClick={() => goToPage(current_page - 1)}
             className={
-              current_page === 1 ? "pointer-events-none opacity-50" : ""
+              current_page === 1
+                ? "pointer-events-none cursor-pointer opacity-50"
+                : "cursor-pointer"
             }
           />
         </PaginationItem>
@@ -70,11 +72,13 @@ export function PaginationComponent({
               <PaginationEllipsis />
             </PaginationItem>
           ) : (
-            <PaginationItem key={page}>
+            <PaginationItem key={page} className="cursor-pointer">
               <PaginationLink
                 onClick={() => goToPage(page)}
-                className={`${
-                  current_page === page ? "bg-primary text-background" : ""
+                className={`hover:bg-foreground hover:text-background ${
+                  current_page === page
+                    ? "cursor-pointer bg-foreground text-background"
+                    : "cursor-pointer"
                 }`}
               >
                 {page}
@@ -86,7 +90,11 @@ export function PaginationComponent({
         <PaginationItem>
           <PaginationNext
             onClick={() => goToPage(current_page + 1)}
-            className={!has_next_page ? "pointer-events-none opacity-50" : ""}
+            className={
+              !has_next_page
+                ? "pointer-events-none cursor-pointer opacity-50"
+                : "cursor-pointer"
+            }
           />
         </PaginationItem>
       </PaginationContent>

@@ -7,7 +7,7 @@ const AnimeCard = ({ anime }: { anime: Anime }) => {
   const extraGenres = anime.genres.length - 2;
 
   return (
-    <div className="flex w-full max-w-2xl items-center gap-6 bg-background p-4 sm:rounded-2xl sm:border sm:border-foreground/20">
+    <div className="flex w-full max-w-2xl cursor-pointer items-center gap-6 bg-background p-4 sm:rounded-2xl sm:border sm:border-foreground/20">
       {/* Image Section */}
       <div className="relative h-60 w-[45%] overflow-hidden rounded-xl">
         <Image
