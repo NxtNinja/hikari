@@ -38,13 +38,13 @@ async function FetchAnimeData({
 
 type Props = {
   params: Promise<{ category: string }>;
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 // ❌ Do not use `async` on this function!
 export default function CategoryPage({ params, searchParams }: Props) {
   const { category } = use(params);
-  const page = searchParams.page;
+  const { page } = use(searchParams);
   const currentPage = Number(Array.isArray(page) ? page[0] : page) || 1;
 
   return (
