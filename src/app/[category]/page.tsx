@@ -6,6 +6,16 @@ import kyServer from "@/lib/ky";
 import { AnimeType } from "@/lib/types";
 import Loading from "@/components/Loader";
 
+// Update the PageProps interface to match Next.js 13+ typing
+interface PageProps {
+  params: {
+    category: string;
+  };
+  searchParams?: {
+    page?: string;
+  };
+}
+
 async function FetchAnimeData({
   category,
   currentPage,
@@ -15,15 +25,13 @@ async function FetchAnimeData({
 }) {
   const config = categoryConfig[category];
 
-  if (!config)
+  if (!config) {
     return <p className="text-center text-xl">Category not found.</p>;
+  }
 
   const apiUrl = `${config.api}&page=${currentPage}`;
-
   const { data, pagination } = await kyServer
-    .get(apiUrl, {
-      next: { revalidate: 60 },
-    })
+    .get(apiUrl, { next: { revalidate: 60 } })
     .json<AnimeType>();
 
   return (
@@ -38,14 +46,9 @@ async function FetchAnimeData({
   );
 }
 
-export default function CategoryPage({
-  params: { category },
-  searchParams,
-}: {
-  params: { category: string };
-  searchParams: { page?: string };
-}) {
-  const currentPage = Number(searchParams.page) || 1;
+export default function CategoryPage({ params, searchParams }: PageProps) {
+  const { category } = params;
+  const currentPage = Number(searchParams?.page) || 1;
 
   return (
     <div className="space-y-5 sm:p-6">

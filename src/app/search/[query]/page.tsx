@@ -5,17 +5,32 @@ import kyServer from "@/lib/ky";
 import { AnimeType } from "@/lib/types";
 import Loading from "@/components/Loader";
 
-async function FetchAnimeResults({ query }: { query: string }) {
+interface SearchPageProps {
+  params: {
+    query: string;
+  };
+  searchParams?: {
+    page?: string;
+  };
+}
+
+async function FetchAnimeResults({
+  query,
+  currentPage = 1,
+}: {
+  query: string;
+  currentPage?: number;
+}) {
   const decodedQuery = decodeURIComponent(query);
   const { data, pagination } = await kyServer
-    .get(`anime?q=${decodedQuery}&limit=24`, {
+    .get(`anime?q=${decodedQuery}&limit=24&page=${currentPage}`, {
       next: { revalidate: 60 },
     })
     .json<AnimeType>();
 
   return (
     <>
-      {data.length > 0 ? (
+      {data?.length > 0 ? (
         <div className="grid w-full grid-cols-1 place-items-center gap-3 sm:grid-cols-2 md:grid-cols-3">
           {data.map((anime, index) => (
             <AnimeCard key={`${anime.mal_id}-${index}`} anime={anime} />
@@ -30,17 +45,20 @@ async function FetchAnimeResults({ query }: { query: string }) {
 }
 
 export default function SearchResultsPage({
-  params: { query },
-}: {
-  params: { query: string };
-}) {
+  params,
+  searchParams,
+}: SearchPageProps) {
+  const { query } = params;
+  const currentPage = Number(searchParams?.page) || 1;
+  const decodedQuery = decodeURIComponent(query);
+
   return (
     <div className="space-y-5 sm:p-6">
       <h1 className="px-6 text-2xl font-bold sm:px-0">
-        Results for {decodeURIComponent(query)}
+        Results for {decodedQuery}
       </h1>
       <Suspense fallback={<Loading />}>
-        <FetchAnimeResults query={query} />
+        <FetchAnimeResults query={query} currentPage={currentPage} />
       </Suspense>
     </div>
   );
