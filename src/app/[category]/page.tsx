@@ -6,15 +6,6 @@ import kyServer from "@/lib/ky";
 import { AnimeType } from "@/lib/types";
 import Loading from "@/components/Loader";
 
-type PageProps = {
-  params: {
-    category: string;
-  };
-  searchParams: {
-    page?: string | string[];
-  };
-};
-
 async function FetchAnimeData({
   category,
   currentPage,
@@ -45,17 +36,15 @@ async function FetchAnimeData({
   );
 }
 
-export default async function CategoryPage({
-  params,
-  searchParams,
-}: PageProps) {
+type Props = {
+  params: { category: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export default async function CategoryPage({ params, searchParams }: Props) {
   const { category } = params;
-  const currentPage =
-    Number(
-      Array.isArray(searchParams.page)
-        ? searchParams.page[0]
-        : searchParams.page,
-    ) || 1;
+  const page = searchParams.page;
+  const currentPage = Number(Array.isArray(page) ? page[0] : page) || 1;
 
   return (
     <div className="space-y-5 sm:p-6">
