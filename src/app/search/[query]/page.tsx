@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Suspense, use } from "react";
 import AnimeCard from "@/components/Anime/AnimeCard";
 import { PaginationComponent } from "@/components/Pagination";
 import kyServer from "@/lib/ky";
@@ -6,12 +6,8 @@ import { AnimeType } from "@/lib/types";
 import Loading from "@/components/Loader";
 
 interface SearchPageProps {
-  params: {
-    query: string;
-  };
-  searchParams?: {
-    page?: string;
-  };
+  params: Promise<{ query: string }>;
+  searchParams: Promise<{ page?: string }>;
 }
 
 async function FetchAnimeResults({
@@ -48,8 +44,9 @@ export default function SearchResultsPage({
   params,
   searchParams,
 }: SearchPageProps) {
-  const { query } = params;
-  const currentPage = Number(searchParams?.page) || 1;
+  const { query } = use(params);
+  const { page } = use(searchParams);
+  const currentPage = Number(page) || 1;
   const decodedQuery = decodeURIComponent(query);
 
   return (
