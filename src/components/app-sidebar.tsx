@@ -13,7 +13,6 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { Calendar, Clock, Star, Activity } from "lucide-react";
-import Link from "next/link";
 import ThemeToggleButton from "./Header/ThemeToggleButton";
 
 const data = {
@@ -30,10 +29,7 @@ const data = {
 
     {
       title: "Anime Seasons",
-      items: [
-        { title: "Now", icon: Clock },
-        { title: "Upcoming Seasons", icon: Calendar },
-      ],
+      items: [{ title: "Upcoming Seasons", icon: Calendar }],
     },
     {
       title: "Scheduling Days",
@@ -55,7 +51,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     <Sidebar {...props}>
       <SidebarHeader>
         <div className="flex h-12 items-center justify-between">
-          <p className="px-3 text-3xl font-bold tracking-widest">HIKARI</p>
+          <p className="px-3 text-3xl font-bold tracking-widest">TENKA</p>
           <ThemeToggleButton />
         </div>
       </SidebarHeader>
@@ -68,7 +64,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 {item.items.map((subItem) => (
                   <SidebarMenuItem key={subItem.title}>
                     <SidebarMenuButton asChild>
-                      <Link
+                      <a
                         href={`/${subItem.title.toLowerCase().replace(/\s+/g, "-")}`}
                       >
                         <p className="flex cursor-pointer items-center">
@@ -77,7 +73,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                           )}
                           {subItem.title}
                         </p>
-                      </Link>
+                      </a>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 ))}

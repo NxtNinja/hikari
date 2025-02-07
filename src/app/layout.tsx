@@ -49,15 +49,15 @@ export default function RootLayout({
                 <div className="flex items-center justify-end gap-4 sm:w-full">
                   <div className="flex cursor-pointer items-center gap-2">
                     <Globe />
-                    <p className="hidden sm:block">Discover Anime</p>
+                    <p className="hidden xl:block">Discover Anime</p>
                   </div>
                   <div className="flex cursor-pointer items-center gap-2">
                     <Calendar />
-                    <p className="hidden sm:block">Discover Seasons</p>
+                    <p className="hidden xl:block">Discover Seasons</p>
                   </div>
                   <div className="flex cursor-pointer items-center gap-2">
                     <LinkIcon />
-                    <p className="hidden sm:block">Random Anime</p>
+                    <p className="hidden xl:block">Random Anime</p>
                   </div>
                 </div>
               </header>

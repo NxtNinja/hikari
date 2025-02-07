@@ -1,10 +1,10 @@
-import { Suspense, use } from "react";
 import AnimeCard from "@/components/Anime/AnimeCard";
+import Loading from "@/components/Loader";
 import { PaginationComponent } from "@/components/Pagination";
 import { categoryConfig } from "@/lib/categoryConfig";
 import kyServer from "@/lib/ky";
 import { AnimeType } from "@/lib/types";
-import Loading from "@/components/Loader";
+import { Suspense, use } from "react";
 
 async function FetchAnimeData({
   category,
@@ -26,11 +26,12 @@ async function FetchAnimeData({
 
   return (
     <>
-      <div className="grid w-full grid-cols-1 place-items-center gap-3 sm:grid-cols-2 md:grid-cols-3">
+      <div className="grid w-full grid-cols-2 place-items-center gap-3 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3">
         {data?.map((anime, index) => (
           <AnimeCard key={`${anime.mal_id}-${index}`} anime={anime} />
         ))}
       </div>
+
       <PaginationComponent pagination={pagination} />
     </>
   );
