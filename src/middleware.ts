@@ -4,7 +4,7 @@ import type { NextRequest } from "next/server";
 // Middleware function to handle redirect
 export function middleware(request: NextRequest) {
     // Check if the user is visiting the homepage (root path)
-    if (request.nextUrl.pathname === "/") {
+    if (request.nextUrl.pathname === "/" || request.nextUrl.pathname === "/discover-anime") {
         // Perform the redirect to /dashboard/students
         return NextResponse.redirect(new URL("/airing", request.url));
     }
@@ -15,5 +15,5 @@ export function middleware(request: NextRequest) {
 
 // Optional: Define the paths the middleware should apply to
 export const config = {
-    matcher: "/", // Apply this middleware to the root path only
+    matcher: ["/", "/discover-anime"]
 };

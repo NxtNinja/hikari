@@ -2,15 +2,18 @@ import kyServer from "@/lib/ky";
 import { AnimeType } from "@/lib/types";
 import { HTTPError } from "ky";
 
-const getAllAnime = async () => {
+const getAllAnime = async (apiUrl: string) => {
     try {
-        const data = await kyServer.get("anime").json<AnimeType>();
+        const data = await kyServer
+            .get(apiUrl, { next: { revalidate: 60 } })
+            .json<AnimeType>();
 
         console.log(data);
 
 
         return {
             data,
+            pagination: data.pagination,
             isError: false,
             error: null
         }

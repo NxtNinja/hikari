@@ -30,7 +30,7 @@ export function SearchForm({ ...props }: React.ComponentProps<"form">) {
           <SidebarInput
             id="search"
             placeholder="Search anime"
-            className="pl-8"
+            className="w-full max-w-2xl pl-8"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />

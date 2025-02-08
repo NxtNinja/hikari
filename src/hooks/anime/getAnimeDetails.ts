@@ -1,20 +1,12 @@
 import kyServer from "@/lib/ky";
-import { GenreType } from "@/lib/types";
+import { Anime } from "@/lib/types";
 import { HTTPError } from "ky";
 
-const getAllGenres = async () => {
+const getAnimeDetails = async (id: number) => {
     try {
-        const data = await kyServer.get("genres/anime", {
-            next: {
-                tags: ['getAllGenres']
-            }
-        }).json<GenreType>();
-
-
-
-
+        const data = await kyServer.get(`anime/${id}`).json<{ data: Anime }>();
         return {
-            data: data.data,
+            data,
             isError: false,
             error: null
         }
@@ -30,4 +22,4 @@ const getAllGenres = async () => {
     }
 }
 
-export default getAllGenres;
+export default getAnimeDetails

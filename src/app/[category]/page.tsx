@@ -1,9 +1,9 @@
 import AnimeCard from "@/components/Anime/AnimeCard";
 import Loading from "@/components/Loader";
 import { PaginationComponent } from "@/components/Pagination";
+import getAllAnime from "@/hooks/anime/getAllAnime";
 import { categoryConfig } from "@/lib/categoryConfig";
-import kyServer from "@/lib/ky";
-import { AnimeType } from "@/lib/types";
+
 import { Suspense, use } from "react";
 
 async function FetchAnimeData({
@@ -20,21 +20,21 @@ async function FetchAnimeData({
   }
 
   const apiUrl = `${config.api}&page=${currentPage}`;
-  const { data, pagination } = await kyServer
-    .get(apiUrl, { next: { revalidate: 60 } })
-    .json<AnimeType>();
+  const { data, pagination } = await getAllAnime(apiUrl);
 
-  return (
-    <>
-      <div className="grid w-full grid-cols-2 place-items-center gap-3 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3">
-        {data?.map((anime, index) => (
-          <AnimeCard key={`${anime.mal_id}-${index}`} anime={anime} />
-        ))}
-      </div>
+  if (data) {
+    return (
+      <>
+        <div className="grid w-full grid-cols-2 place-items-center gap-3 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3">
+          {data?.data.map((anime, index) => (
+            <AnimeCard key={`${anime.mal_id}-${index}`} anime={anime} />
+          ))}
+        </div>
 
-      <PaginationComponent pagination={pagination} />
-    </>
-  );
+        <PaginationComponent pagination={pagination} />
+      </>
+    );
+  }
 }
 
 type Props = {

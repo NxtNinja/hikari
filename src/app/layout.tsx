@@ -1,8 +1,9 @@
+import { AppSidebar } from "@/components/app-sidebar";
 import type { Metadata } from "next";
 import { Sulphur_Point } from "next/font/google";
 import "./globals.css";
-import { AppSidebar } from "@/components/app-sidebar";
 
+import { SearchForm } from "@/components/search-form";
 import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
@@ -10,8 +11,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { ThemeProvider } from "next-themes";
-import { Calendar, Globe, LinkIcon } from "lucide-react";
-import { SearchForm } from "@/components/search-form";
+import { Toaster } from "sonner";
 
 const sulphur_point = Sulphur_Point({
   subsets: ["latin"],
@@ -46,25 +46,13 @@ export default function RootLayout({
                   <Separator orientation="vertical" className="mr-2 h-4" />
                   <SearchForm className="w-full" />
                 </div>
-                <div className="flex items-center justify-end gap-4 sm:w-full">
-                  <div className="flex cursor-pointer items-center gap-2">
-                    <Globe />
-                    <p className="hidden xl:block">Discover Anime</p>
-                  </div>
-                  <div className="flex cursor-pointer items-center gap-2">
-                    <Calendar />
-                    <p className="hidden xl:block">Discover Seasons</p>
-                  </div>
-                  <div className="flex cursor-pointer items-center gap-2">
-                    <LinkIcon />
-                    <p className="hidden xl:block">Random Anime</p>
-                  </div>
-                </div>
+                {/* <Header /> */}
               </header>
 
               <main className="w-full py-2">{children}</main>
             </SidebarInset>
           </SidebarProvider>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

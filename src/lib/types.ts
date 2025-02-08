@@ -3,10 +3,12 @@ export type DefautResponseType<T> = {
 };
 
 export type GenreType = {
-    mal_id: number;
-    name: string;
-    url: string;
-    count: number;
+    data: {
+        mal_id: number;
+        name: string;
+        url: string;
+        count: number;
+    }[]
 }
 
 export interface AnimeType {
